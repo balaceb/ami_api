@@ -56,10 +56,10 @@
     
     define("MODERATOR_MODERATION_PERCENTATION", 30);                    // Percentage of assessed learners to be moderated = 30%
     
-    define("GENERIC_EMAIL_HOST", "ami.en3ticket.com");
-    define("GENERIC_FROM_EMAIL", "noreply@ami.en3ticket.com");
-    define("GENERIC_REPLY_EMAIL", "noreply@ami.en3ticket.com");
-    define("GENERIC_EMAIL_PWD", "Cameroonian_1");
+    define("GENERIC_EMAIL_HOST", "ivp.en3ticket.com");
+    define("GENERIC_FROM_EMAIL", "admin@ivp.en3ticket.com");
+    define("GENERIC_REPLY_EMAIL", "admin@ivp.en3ticket.com");
+    define("GENERIC_EMAIL_PWD", "BVYuZQkLKz9YEWy");
     define("GENERIC_FROM_NAME", " AMI Admin ");
     
     // ToDo: Update accordingly for other programmes and domains
@@ -71,5 +71,5 @@
     
     define("LMS_SLMS_MAIN_HOMEPAGE", "https://www.en3ticket.com");
     define("LMS_PROGRAMME_PARENT_FOLDER", "/msep/");                    // used to redirect user after login to the right user role account
-    define("LMS_PROGRAMME_ABS_PATH", "https://ami.en3ticket.com/");// used for invitation, password reset and program specific login(sent after registration) links 
+    define("LMS_PROGRAMME_ABS_PATH", "https://ivp.en3ticket.com/");// used for invitation, password reset and program specific login(sent after registration) links 
 ?>

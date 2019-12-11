@@ -43,10 +43,10 @@
                 //Server settings
                 $mail->SMTPDebug = 0;                                       // 2 ==> Enable verbose debug output
                 $mail->isSMTP();                                            // Set mailer to use SMTP
-                $mail->Host       = $this->email_host; //GENERIC_EMAIL_HOST;                         // Specify main and backup SMTP servers
+                $mail->Host       = $this->email_host;                         // Specify main and backup SMTP servers
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = $this->email_from; //GENERIC_FROM_EMAIL;                         // SMTP username
-                $mail->Password   = $this->email_pwd; //GENERIC_EMAIL_PWD;                          // SMTP password
+                $mail->Username   = $this->email_from; //                         // SMTP username
+                $mail->Password   = $this->email_pwd; //                          // SMTP password
                 $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption, `ssl` also accepted
                 $mail->Port       = '465';                                  // TCP port to connect to
                 

@@ -16,6 +16,11 @@
     // Read and sanitize update values
     $receiver_email         = htmlspecialchars(strip_tags($data->receiver_email));
     $receiver_name          = htmlspecialchars(strip_tags($data->receiver_name));
+
+//     $reply_name          = htmlspecialchars(strip_tags($data->reply_name));
+//     $reply_email          = htmlspecialchars(strip_tags($data->reply_email));
+    
+    
     $email_subject          = htmlspecialchars(strip_tags($data->email_subject));
     $email_body_html        = htmlspecialchars(strip_tags($data->email_body_html));
     $email_body_no_html     = htmlspecialchars(strip_tags($data->email_body_no_html));

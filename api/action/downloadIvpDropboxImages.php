@@ -11,8 +11,8 @@
     $data = json_decode(file_get_contents("php://input"));
 		
 	// Get from db?
-// 	$aToken = "n0ZfoO5DlNwAAAAAAAAIlzum3wX5y4KyaxDPK0oBlGsVDJomg35-NEKO6EwdFOpk";
-	$aToken = "6w4TtuZJNjcAAAAAAAAk7lS8jlXC_JSS_jeqWxDLAng9UqI29OcU-4MSMn64jSnd"; // eric_
+ 	$aToken = "n0ZfoO5DlNwAAAAAAAAIlzum3wX5y4KyaxDPK0oBlGsVDJomg35-NEKO6EwdFOpk";
+// 	$aToken = "6w4TtuZJNjcAAAAAAAAk7lS8jlXC_JSS_jeqWxDLAng9UqI29OcU-4MSMn64jSnd"; // eric_
 	
 	$cookieId = "id_" . (string)(time() + rand(10000, 100000000)); 
 	$_COOKIE[$cookieId] = "";
@@ -40,8 +40,8 @@
 			
 			
 			// ToDo: Update folder path to point to actual pictures of event
-// 			dbx.filesListFolder({path: '/Family/Baby/Keneric/Pics'})
-			dbx.filesListFolder({path: '/AMI Johannesburg/Images/Events/IVP/GALLERY'})
+			dbx.filesListFolder({path: '/Family/Baby/Keneric/Pics'})
+// 			dbx.filesListFolder({path: '/AMI Johannesburg/Images/Events/IVP/GALLERY'})
 			.then(function(response) {
 			  console.log('response', response);
 			  displayFiles(response.entries, 'IVP');
