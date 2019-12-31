@@ -17,9 +17,9 @@
 	
 	if (null != $data) 
 	{
-	    $dir = $data_decoded->type;        // Type contains the category or images we are to store. E.g IVP, general, etc
+	    $dir = strtoupper($data_decoded->type) ;        // Type contains the category or images we are to store. E.g IVP, general, etc
 	    
-	    $img_sub_path = "../data/images/";
+	    $img_sub_path = "../data/images/IVP/";
 	    $img_dir = $img_sub_path . $dir . '/';
 	    if( is_dir($img_dir) === false )
 	    {

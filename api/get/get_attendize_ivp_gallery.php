@@ -86,28 +86,28 @@
         
         switch($requestId)
         {
-            case "ivp":     // IVP pictures for the slider (at the bottom)
-                $images_folder = "../data/images/IVP";
-                $url_images_folder = $domain . "api/data/images/IVP";
+            case "gallery":     // IVP pictures for the slider (at the bottom)
+                $images_folder = "../data/images/IVP/" . strtoupper($requestId);
+                $url_images_folder = $domain . "api/data/images/IVP/" . strtoupper($requestId);
                 $type = "ivp";
                 break;
 
             case "venue":  // ivp venue pics
-                $images_folder = "../data/images/CHURCH";
-                $url_images_folder = $domain . "api/data/images/venue";
-                $type = "church";
+                $images_folder = "../data/images/IVP/" . strtoupper($requestId);
+                $url_images_folder = $domain . "api/data/images/IVP/" . strtoupper($requestId);
+                $type = "venue";
                 break;
                 
             case "church":  // general church pics
-                $images_folder = "../data/images/CHURCH";
-                $url_images_folder = $domain . "api/data/images/CHURCH";
+                $images_folder = "../data/images/" . strtoupper($requestId);
+                $url_images_folder = $domain . "api/data/images/" . strtoupper($requestId);
                 $type = "church";
                 break;
                 
             case "intro":   // main profile picture
                 // Process and store image
-                $images_folder = "../data/images/INTRO";
-                $url_images_folder = $domain . "api/data/images/INTRO";
+                $images_folder = "../data/images/" . strtoupper($requestId);
+                $url_images_folder = $domain . "api/data/images/" . strtoupper($requestId);
                 $type = "intro";
                 break;
                 
@@ -136,7 +136,7 @@
                     $file_parts = pathinfo($file);
                     
                     // switch file extension
-                    switch($file_parts['extension'])
+                    switch(strtolower($file_parts['extension']))
                     {
                         case "jpg":
                         case "jpeg":

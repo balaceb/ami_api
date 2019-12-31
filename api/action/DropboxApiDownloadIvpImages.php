@@ -274,9 +274,10 @@ function curlDropboxApiGetFileMetaData($url='https://api.dropboxapi.com/2/sharin
 }
 
 
-function processDropboxApiCallResponse($html)
+function processDropboxApiCallResponse($html, $type)
 {
-    $url = "https://api.dropboxapi.com/2/sharing/get_file_metadata";
+    
+    $url = "https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings";
     
     global $domain_url;
     
@@ -294,21 +295,37 @@ function processDropboxApiCallResponse($html)
                 {
                     $cntr = $cntr +1;
                     
-                    $response = (json_decode(curlDropboxApiGetFileMetaData($url, $image['path_display'])));
-                    
-                    $len = (strlen($response->preview_url));
-                    $response->preview_url[$len-1] = '1';
-                    
-                   //  var_dump($response);
+                    $response = (json_decode(curlDropboxApiCreateSharedLink($url, $image['path_display'])));
+                                 
+                                   
+                    $image_url = '';
+                    $image_name = '';
+                    if(isset($response->error))
+                    {
+                        $image_url = $response->error->shared_link_already_exists->metadata->url;
+                        $image_name = $response->error->shared_link_already_exists->metadata->name;
+                        var_dump($image_url);
+                    }
+                    else
+                    {
+                        $image_url = $response->url;
+                        $image_name = $response->name;
+                        var_dump($image_url);
+                    }
+                    $len = (strlen($image_url));
+                    $image_url[$len-1] = '1';
+                        
+                        
+                        
                     
                     // send new file info to saveIvpImages.php so it can be saved on server
                     $data = array(
-                        'name' => $response->name,
-                        'filename' => $response->name,
-                        'path_display' => $response->preview_url,   // we use $response->preview_url cuz we have already prepared the link for download
+                        'name' => $image_name,
+                        'filename' => $image_name,
+                        'path_display' => $image_url,   // we use $response->preview_url cuz we have already prepared the link for download
                     );
                     
-                    $data_desc = array('type' => 'IVP', 'data' => $data);
+                    $data_desc = array('type' => $type, 'data' => $data);
                     $data_json = json_encode($data_desc, JSON_FORCE_OBJECT);
                     $result = curlSaveImageOnServer($domain_url . 'saveIvpImages.php', $data_json);
                     
@@ -343,6 +360,7 @@ function processDropboxApiCallResponse($html)
                 {
                     // Do nothing
                 }
+                
             }
             
             var_dump($cntr);
@@ -353,7 +371,7 @@ function processDropboxApiCallResponse($html)
 }
 
 
-function curlDropboxApiListFiles($url, $path="")
+function curlDropboxApiListFiles($url, $path="", $type="")
 {
     // Create a new cURL resource
     $curl = curl_init();
@@ -415,13 +433,14 @@ function curlDropboxApiListFiles($url, $path="")
     
     
     
-    processDropboxApiCallResponse($html);
+    processDropboxApiCallResponse($html, $type);
     
 }
 
+set_time_limit (1600);
 
-curlDropboxApiListFiles("https://api.dropboxapi.com/2/files/list_folder", '/Images/Events/IVP/GALLERY');
+curlDropboxApiListFiles("https://api.dropboxapi.com/2/files/list_folder", '/Images/Events/IVP/GALLERY', 'gallery');
 
-
+curlDropboxApiListFiles("https://api.dropboxapi.com/2/files/list_folder", '/Images/Events/IVP/VENUE', 'venue');
 
 
