@@ -14,6 +14,19 @@
 //     $domain = "api.com/";
     $domain = "http://localhost/aser/others/learning/test_api/";
     
+    
+    $whitelist = array(
+        '127.0.0.1',
+        '::1'
+    );
+    
+    if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist))
+    {
+        $domain = 'https://www.en3ticket.com/api/';
+    }
+    
+    
+    
     class AttendizeEventsImages
     {
         

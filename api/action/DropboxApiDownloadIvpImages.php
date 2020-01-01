@@ -9,12 +9,19 @@
  *     
  * */
 
-$domain_url = 'https://www.en3ticket.com/api/api/action/';
 
-if (file_exists('./saveIvpImages.php')) 
+$domain_url = 'localhost/aser/others/learning/test_api/api/action/';
+
+$whitelist = array(
+    '127.0.0.1',
+    '::1'
+);
+
+if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist))
 {
-    $domain_url = 'localhost/aser/others/learning/test_api/api/action/';
+    $domain_url = 'https://www.en3ticket.com/api/api/action/';
 }
+
 
 // Save file to disk
 function curlSaveImageOnServer($url='', $data='')
