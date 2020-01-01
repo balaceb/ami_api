@@ -22,10 +22,10 @@
     
     if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist))
     {
-        
+        $domain = 'https://www.en3ticket.com/api/';
     }
     
-    $domain = 'https://www.en3ticket.com/api/';
+    
     
     class AttendizeEventsImages
     {
