@@ -5,13 +5,12 @@
  */
     // required headers
     header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
+   // header("Content-Type: application/json; charset=UTF-8");
     
     // include lib files
     include_once '../shared/status.php';
     
     // ToDo: Please change accordingly
-//     $domain = "api.com/";
     $domain = "http://localhost/aser/others/learning/test_api/";
     
     
@@ -36,28 +35,7 @@
         public $type;               // Image type. Is it ivp, church, etc
     }
     
-    
-    /**
-     * Check if url exists
-     *
-     * @param string $url
-     * @return bool
-     */
-    function does_url_exists($url) {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        
-        if ($code == 200) {
-            $status = true;
-        } else {
-            $status = false;
-        }
-        curl_close($ch);
-        return $status;
-    }
-    
+   
     
     /**
      * Check if a directory is empty (a directory with just '.svn' or '.git' is empty)
@@ -119,7 +97,7 @@
         $url_images_folder = "";
         $type = "";
         
-        $domain_data = $domain . "api/data/images/";
+        $domain_data = "../data/images/";
         
         switch($requestId)
         {
@@ -154,11 +132,12 @@
                 break;
         }
         
-        //var_dump (is_dir('en3ticket.com/api/api/data/images/IVP'));
+        //var_dump (is_dir('ftp://ami_generic:Q5U=1xn(hhab@en3ticket.com/IVP'));
+        // Q5U=1xn(hhab
         
+        var_dump(dir_is_empty($images_folder));
         
-        
-        if( does_url_exists($images_folder) === true )
+        if( is_dir($images_folder) === true )
         {
             // directory exists, we now check if it is empty or not
             $isEmpty = dir_is_empty($images_folder);
