@@ -5,7 +5,7 @@
  */
     // required headers
     header("Access-Control-Allow-Origin: *");
-   // header("Content-Type: application/json; charset=UTF-8");
+    header("Content-Type: application/json; charset=UTF-8");
     
     // include lib files
     include_once '../shared/status.php';
@@ -21,9 +21,9 @@
     
     if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist))
     {
-        
+        $domain = 'https://www.en3ticket.com/api/';
     }
-    $domain = 'https://www.en3ticket.com/api/';
+    
     
     
     class AttendizeEventsImages
@@ -134,8 +134,6 @@
         
         //var_dump (is_dir('ftp://ami_generic:Q5U=1xn(hhab@en3ticket.com/IVP'));
         // Q5U=1xn(hhab
-        
-        var_dump(dir_is_empty($images_folder));
         
         if( is_dir($images_folder) === true )
         {
