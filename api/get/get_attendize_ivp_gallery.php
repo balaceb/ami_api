@@ -22,10 +22,10 @@
     
     if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist))
     {
-        $domain = 'https://www.en3ticket.com/api/';
+        
     }
     
-    
+    $domain = 'https://www.en3ticket.com/api/';
     
     class AttendizeEventsImages
     {
@@ -97,16 +97,18 @@
         $url_images_folder = "";
         $type = "";
         
+        $domain_data = $domain . "api/data/images/";
+        
         switch($requestId)
         {
             case "gallery":     // IVP pictures for the slider (at the bottom)
-                $images_folder = "../data/images/IVP/" . strtoupper($requestId);
+                $images_folder = $domain_data . "IVP/" . strtoupper($requestId);
                 $url_images_folder = $domain . "api/data/images/IVP/" . strtoupper($requestId);
                 $type = "ivp";
                 break;
 
             case "venue":  // ivp venue pics
-                $images_folder = "../data/images/IVP/" . strtoupper($requestId);
+                $images_folder = $domain_data . "IVP/" . strtoupper($requestId);
                 $url_images_folder = $domain . "api/data/images/IVP/" . strtoupper($requestId);
                 $type = "venue";
                 break;
