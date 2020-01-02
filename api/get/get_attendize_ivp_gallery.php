@@ -10,8 +10,8 @@
     // include lib files
     include_once '../shared/status.php';
     
-    // ToDo: Please change accordingly
-    $domain = "http://localhost/aser/others/learning/test_api/";
+    //
+    $domain = 'https://www.en3ticket.com/api/';
     
     
     $whitelist = array(
@@ -19,9 +19,10 @@
         '::1'
     );
     
-    if(!in_array($_SERVER['REMOTE_ADDR'], $whitelist))
+    
+    if(in_array($_SERVER['REMOTE_ADDR'], $whitelist))
     {
-        $domain = 'https://www.en3ticket.com/api/';
+        $domain = "http://localhost/aser/others/learning/test_api/";
     }
     
     
