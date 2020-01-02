@@ -24,8 +24,8 @@
     {
         
     }
-    
     $domain = 'https://www.en3ticket.com/api/';
+    
     
     class AttendizeEventsImages
     {
@@ -34,6 +34,28 @@
         public $name;               // Image filename
         public $url;                // Image full path
         public $type;               // Image type. Is it ivp, church, etc
+    }
+    
+    
+    /**
+     * Check if url exists
+     *
+     * @param string $url
+     * @return bool
+     */
+    function does_url_exists($url) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        
+        if ($code == 200) {
+            $status = true;
+        } else {
+            $status = false;
+        }
+        curl_close($ch);
+        return $status;
     }
     
     
@@ -114,15 +136,15 @@
                 break;
                 
             case "church":  // general church pics
-                $images_folder = "../data/images/" . strtoupper($requestId);
-                $url_images_folder = $domain . "api/data/images/" . strtoupper($requestId);
+                $images_folder = $domain_data . "GENERAL/" . strtoupper($requestId);
+                $url_images_folder = $domain . "api/data/images/GENERAL" . strtoupper($requestId);
                 $type = "church";
                 break;
                 
             case "intro":   // main profile picture
                 // Process and store image
-                $images_folder = "../data/images/" . strtoupper($requestId);
-                $url_images_folder = $domain . "api/data/images/" . strtoupper($requestId);
+                $images_folder = $domain_data . "GENERAL/" . strtoupper($requestId);
+                $url_images_folder = $domain . "api/data/images/GENERAL" . strtoupper($requestId);
                 $type = "intro";
                 break;
                 
@@ -132,9 +154,11 @@
                 break;
         }
         
-       // echo $_SERVER['REQUEST_URI'];
+        //var_dump (is_dir('en3ticket.com/api/api/data/images/IVP'));
         
-        if( is_dir($images_folder) === true )
+        
+        
+        if( does_url_exists($images_folder) === true )
         {
             // directory exists, we now check if it is empty or not
             $isEmpty = dir_is_empty($images_folder);
