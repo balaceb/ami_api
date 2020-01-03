@@ -105,7 +105,7 @@
             case "gallery":     // IVP pictures for the slider (at the bottom)
                 $images_folder = $domain_data . "IVP/" . strtoupper($requestId);
                 $url_images_folder = $domain . "api/data/images/IVP/" . strtoupper($requestId);
-                $type = "ivp";
+                $type = "gallery";
                 break;
 
             case "venue":  // ivp venue pics
