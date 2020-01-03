@@ -45,7 +45,7 @@
 	            case "gif":
 	            case "bmp":
 	                // Process and store image
-	                $img_storage_path = $img_dir . $image->name;
+	                $img_storage_path = $img_dir . strtolower($image->name);
 	                
 	                // At the moment we only store the image if it does not already exist.
 	                if (!file_exists($img_storage_path))

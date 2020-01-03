@@ -40,7 +40,21 @@
         public function __construct()
         {
             $this->fmt = new Format();
-            $db = new Database('localhost', 'attendize', '', '');
+            $db = new Database('localhost', 'cashtwo5_attendize', '', '');
+            
+            
+            $whitelist = array(
+                '127.0.0.1',
+                '::1'
+            );
+            
+            
+            if(in_array($_SERVER['REMOTE_ADDR'], $whitelist))
+            {
+                $db = new Database('localhost', 'attendize', '', '');
+            }
+            
+            
             $this->conn = $db;
             
             date_default_timezone_set('Africa/Johannesburg');
