@@ -34,8 +34,7 @@
         {
             $this->fmt = new Format();
             
-            $db = new Database('localhost', 'cashtwo5_attendize', '', '');   // ToDo: Change dbname and dbhost accordingly
-            
+            $db = '';
             
             $whitelist = array(
                 '127.0.0.1',
@@ -47,7 +46,10 @@
             {
                 $db = new Database('localhost', 'attendize', '', '');
             }
-            
+            else
+            {
+                $db = new Database('localhost', 'cashtwo5_attendize', '', '');   // ToDo: Change dbname and dbhost accordingly
+            }
             $this->conn = $db;
             
             date_default_timezone_set('Africa/Johannesburg');

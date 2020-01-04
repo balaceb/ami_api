@@ -40,7 +40,7 @@
         public function __construct()
         {
             $this->fmt = new Format();
-            $db = new Database('localhost', 'cashtwo5_attendize', '', '');
+            $db = '';
             
             
             $whitelist = array(
@@ -48,10 +48,14 @@
                 '::1'
             );
             
-            
+            // change db name accordingly
             if(in_array($_SERVER['REMOTE_ADDR'], $whitelist))
             {
                 $db = new Database('localhost', 'attendize', '', '');
+            }
+            else 
+            {
+               $db = new Database('localhost', 'cashtwo5_attendize', '', ''); 
             }
             
             
@@ -78,7 +82,7 @@
         public function readById($id)
         {
             // select query
-            $query = "SELECT * FROM " . $this->table_name . " WHERE id='$id'";
+            $query = "SELECT * FROM " . $this->table_name . " WHERE id='$id' ORDER BY start_date ASC";
             
             // execute query statement
             $stmt = $this->conn->select($query);
@@ -91,7 +95,7 @@
         public function readByOrganiserId($id)
         {
             // select query
-            $query = "SELECT * FROM " . $this->table_name . " WHERE organiser_id='$id'";
+            $query = "SELECT * FROM " . $this->table_name . " WHERE organiser_id='$id' ORDER BY start_date ASC";
             
             // execute query statement
             $stmt = $this->conn->select($query);
