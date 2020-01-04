@@ -73,7 +73,7 @@
         public function readById($id)
         {
             // select query
-            $query = "SELECT * FROM " . $this->table_name . " WHERE id='$id'";
+            $query = "SELECT * FROM " . $this->table_name . " WHERE id='$id' ORDER BY price ASC";
             
             // execute query statement
             $stmt = $this->conn->select($query);
@@ -86,7 +86,7 @@
         public function readByEventId($id)
         {
             // select query
-            $query = "SELECT * FROM " . $this->table_name . " WHERE event_id='$id'" . " ORDER BY price DESC";
+            $query = "SELECT * FROM " . $this->table_name . " WHERE event_id='$id'" . " ORDER BY price ASC";
             
             // execute query statement
             $stmt = $this->conn->select($query);
