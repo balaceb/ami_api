@@ -82,7 +82,7 @@
             }
         }
         
-        // Randomize array
+        // Randomize array. This helps since the images in the folder may not be displayed at once on the events site. Each visitor or each time the website is opened, a different set of pics are shown
         shuffle($result);
         
         return $result;
