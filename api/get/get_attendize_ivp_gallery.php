@@ -82,6 +82,9 @@
             }
         }
         
+        // Randomize array
+        shuffle($result);
+        
         return $result;
     }
     

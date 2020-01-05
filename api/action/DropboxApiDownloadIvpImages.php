@@ -289,92 +289,130 @@ function processDropboxApiCallResponse($html, $type)
     global $domain_url;
     
     $images = (json_decode($html, true));
-    foreach ($images as $key => $value)
+    
+    if(null != $images)
     {
+        $img_gallery    = "../data/images/IVP/GALLERY/*";
+        $img_venue      = "../data/images/IVP/VENUE/*";
         
-        if('entries' === $key)
-        {
-            $cntr = 0;
-            
-            foreach($value as $image)
-            {
-                if('file' === $image['.tag'])
-                {
-                    $cntr = $cntr +1;
-                    
-                    $response = (json_decode(curlDropboxApiCreateSharedLink($url, $image['path_display'])));
-                                 
-                                   
-                    $image_url = '';
-                    $image_name = '';
-                    if(isset($response->error))
-                    {
-                        $image_url = $response->error->shared_link_already_exists->metadata->url;
-                        $image_name = $response->error->shared_link_already_exists->metadata->name;
-                        var_dump($image_url);
-                    }
-                    else
-                    {
-                        $image_url = $response->url;
-                        $image_name = $response->name;
-                        var_dump($image_url);
-                    }
-                    $len = (strlen($image_url));
-                    $image_url[$len-1] = '1';
-                        
-                        
-                        
-                    
-                    // send new file info to saveIvpImages.php so it can be saved on server
-                    $data = array(
-                        'name' => $image_name,
-                        'filename' => $image_name,
-                        'path_display' => $image_url,   // we use $response->preview_url cuz we have already prepared the link for download
-                    );
-                    
-                    $data_desc = array('type' => $type, 'data' => $data);
-                    $data_json = json_encode($data_desc, JSON_FORCE_OBJECT);
-                    $result = curlSaveImageOnServer($domain_url . 'saveIvpImages.php', $data_json);
-                    
-                    if( ('Success' != $result) && ('success' != $result) && ('Ok' != $result) && ('OK' != $result) )
-                    {
-                        // Log error
-                        $file = '../data/error_log.txt';
-                        // The new person to add to the file
-                        $person = "Error Getting shared link of image at: " . date("D M d, Y G:i") . "\n";
-                        // Write the contents to the file,
-                        // using the FILE_APPEND flag to append the content to the end of the file
-                        // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
-                        file_put_contents($file, $person, FILE_APPEND | LOCK_EX);
-                    }
-                    else
-                    {
-                        // Do nothing
-                    }
-                    
-                    
-                    // We limit the number of images to 100?
-                    if(50 == $cntr)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        // Do nothing
-                    }
+        if ("gallery" == $type) {
+            // Delete Gallery files
+            $files = glob($img_gallery); // get all file gallery names
+            foreach ($files as $file) { // iterate files
+                if ((is_file($file)) && ("index.php" != $file)) {
+                    unlink($file); // delete file
                 }
-                else
+            }
+            
+        }
+        
+        if ("venue" == $type) {
+            // Delete Venue files
+            $files = glob($img_venue);    // get all venue image names
+            foreach($files as $file){ // iterate files
+                if( (is_file($file)) && ("index.php" != $file) )
                 {
-                    // Do nothing
+                    unlink($file); // delete file
                 }
                 
             }
-            
-            var_dump($cntr);
+        }
+
+        
+        
+        foreach ($images as $key => $value) 
+        {
+
+            if ('entries' === $key) 
+            {
+                $cntr = 0;
+
+                foreach ($value as $image) 
+                {
+                    if ('file' === $image['.tag']) 
+                    {
+                        $cntr = $cntr + 1;
+
+                        $response = (json_decode(curlDropboxApiCreateSharedLink($url, $image['path_display'])));
+
+                        $image_url = '';
+                        $image_name = '';
+                        
+                        if (isset($response->error)) 
+                        {
+                            $image_url = $response->error->shared_link_already_exists->metadata->url;
+                            $image_name = $response->error->shared_link_already_exists->metadata->name;
+                            var_dump($image_url);
+                        } 
+                        else 
+                        {
+                            $image_url = $response->url;
+                            $image_name = $response->name;
+                            var_dump($image_url);
+                        }
+                        
+                        $len = (strlen($image_url));
+                        $image_url[$len - 1] = '1';
+
+                        // send new file info to saveIvpImages.php so it can be saved on server
+                        $data = array(
+                            'name' => $image_name,
+                            'filename' => $image_name,
+                            'path_display' => $image_url // we use $response->preview_url cuz we have already prepared the link for download
+                        );
+
+                        $data_desc = array(
+                            'type' => $type,
+                            'data' => $data
+                        );
+                        
+                        $data_json = json_encode($data_desc, JSON_FORCE_OBJECT);
+                        
+                        $result = curlSaveImageOnServer($domain_url . 'saveIvpImages.php', $data_json);
+
+                        if (('Success' != $result) && ('success' != $result) && ('Ok' != $result) && ('OK' != $result)) 
+                        {
+                            // Log error
+                            $file = '../data/error_log.txt';
+                            // The new person to add to the file
+                            $person = "Error Getting shared link of image at: " . date("D M d, Y G:i") . "\n";
+                            // Write the contents to the file,
+                            // using the FILE_APPEND flag to append the content to the end of the file
+                            // and the LOCK_EX flag to prevent anyone else writing to the file at the same time
+                            file_put_contents($file, $person, FILE_APPEND | LOCK_EX);
+                        } 
+                        else 
+                        {
+                            // Do nothing
+                        }
+
+                        // We limit the number of images to 100?
+                        if (50 == $cntr) 
+                        {
+                            break;
+                        } 
+                        else 
+                        {
+                            // Do nothing
+                        }
+                    } 
+                    else 
+                    {
+                        // Do nothing
+                    }
+                }
+
+                var_dump($cntr);
+            }
         }
         
+    }
+    else
+    {
         
     }
+    
+    
 }
 
 
