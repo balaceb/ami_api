@@ -21,6 +21,7 @@
         public $event_postcode;         // Event Venue Postcode
         public $event_author_id;        // Primary of organiser account/user that created event
         public $organiser_id;           // Event Organiser
+        public $symbol_left;            // Event Currency Symbol
         public $isEventExpired;         // True if event has already passed
         public $isEventDisabled;        // True if event is disabled
         public $date;                   // Date event was created 
@@ -69,7 +70,7 @@
         public function readAll()
         {
             // select all query
-            $query = "SELECT * FROM " . $this->table_name . " ORDER BY start_date DESC";
+            $query = "SELECT " . $this->table_name . ".*, currencies.symbol_left, currencies.code FROM " . $this->table_name . " JOIN currencies ON " . $this->table_name . ".currency_id=currencies.id ORDER BY start_date DESC";
             
             // execute query statement
             $stmt = $this->conn->select($query);
@@ -82,7 +83,7 @@
         public function readById($id)
         {
             // select query
-            $query = "SELECT * FROM " . $this->table_name . " WHERE id='$id' ORDER BY start_date ASC";
+            $query = "SELECT " . $this->table_name . ".*, currencies.symbol_left, currencies.code FROM " . $this->table_name . " JOIN currencies ON " . $this->table_name . ".currency_id=currencies.id WHERE '$this->table_name'.id='$id' ORDER BY start_date ASC";
             
             // execute query statement
             $stmt = $this->conn->select($query);
@@ -95,7 +96,8 @@
         public function readByOrganiserId($id)
         {
             // select query
-            $query = "SELECT * FROM " . $this->table_name . " WHERE organiser_id='$id' ORDER BY start_date ASC";
+            $query = "SELECT " . $this->table_name . ".*, currencies.symbol_left, currencies.code FROM " . $this->table_name . " JOIN currencies ON " . $this->table_name . ".currency_id=currencies.id WHERE " . $this->table_name.".organiser_id='$id' ORDER BY start_date ASC";
+            
             
             // execute query statement
             $stmt = $this->conn->select($query);
@@ -126,6 +128,7 @@
                     event_postcode,
                     account_id,
                     organiser_id,
+                    symbol_left,
                     created_at
                 )
                 VALUES
@@ -144,6 +147,7 @@
                     '$this->event_postcode',
                     '$this->event_author_id',
                     '$this->organiser_id',
+                    '$this->symbol_left',
                     '$this->date'
                 )
                 ON DUPLICATE KEY UPDATE
@@ -157,7 +161,8 @@
                     location_state = '$this->event_city',
                     location_address_line_1 = '$this->event_addr1',
                     location_address_line_2 = '$this->event_addr2',
-                    location_post_code = '$this->event_postcode'
+                    location_post_code = '$this->event_postcode',
+                    symbol_left = '$this->symbol_left'
 //                     user_id = '$this->event_author_id'
 //                     organiser_id = '$this->organiser_id'
 //                     created_at = '$this->date'
@@ -190,6 +195,7 @@
                     location_address_line_1 = '$this->event_addr1',
                     location_address_line_2 = '$this->event_addr2',
                     location_post_code = '$this->event_postcode'
+                    symbol_left = '$this->symbol_left'
 //                     user_id = '$this->event_author_id'
 //                     organiser_id = '$this->organiser_id'
 //                     created_at = '$this->date'

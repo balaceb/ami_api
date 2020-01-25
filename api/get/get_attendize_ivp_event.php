@@ -45,6 +45,7 @@
             $eventInfo->event_postcode  = $row['location_post_code'];
             $eventInfo->event_author_id = $row['user_id'];
             $eventInfo->organiser_id    = $row['organiser_id'];
+            $eventInfo->symbol_left    = $row['symbol_left'];
             $eventInfo->isEventDisabled = !$row['is_live'];
             
             // We calculate difference between now and end date of event. If now is bigger that event end date, then event ended.
